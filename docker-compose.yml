@@ -18,7 +18,7 @@ services:
       context: ./kweeter-backend/TweetAPI/
       dockerfile: ./TweetAPI/Dockerfile
     ports:
-    - "8008"
+    - "5141:80"
     depends_on:
       - tweet_db
     container_name: tweet_api
