@@ -20,7 +20,7 @@ services:
     ports:
     - "8008"
     depends_on:
-      - order_db
+      - tweet_db
     container_name: tweet_api
 
 volumes:
