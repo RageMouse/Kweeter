@@ -16,7 +16,7 @@ services:
   tweetapi:
     build:
       context: ./kweeter-backend/TweetAPI/
-      dockerfile: ./kweeter-backend/TweetAPI/TweetAPI/Dockerfile
+      dockerfile: ./TweetAPI/Dockerfile
     ports:
     - "8008"
     depends_on:
