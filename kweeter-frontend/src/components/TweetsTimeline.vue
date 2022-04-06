@@ -2,11 +2,18 @@
   <v-card class="elevation-12 mx-auto" max-width="1500">
     <v-container fluid>
       <v-row dense>
-        <v-col cols="12" md="3" sm="4" xs="12">
+        <v-col
+          v-for="tweet in tweets"
+          :key="tweet.tweetId"
+          cols="12"
+          md="3"
+          sm="4"
+          xs="12"
+        >
           <v-card class="mx-auto" color="#26c6da" dark max-width="600">
             <v-card-title>
               <v-icon large left> mdi-twitter </v-icon>
-              <span class="text-h6 font-weight-light">Tweeter</span>
+              <span class="text-h6 font-weight-light" v-text="tweet.tweetName"></span>
             </v-card-title>
 
             <v-card-text class="text-h5 font-weight-bold">
@@ -43,3 +50,22 @@
     </v-container>
   </v-card>
 </template>
+
+<script>
+export default {
+  name: "tweetList",
+  computed: {
+    tweets() {
+      return this.$store.getters.tweets;
+    },
+  },
+  mounted() {
+    this.getAllTweets();
+  },
+  methods: {
+    getAllTweets() {
+      return this.$store.dispatch("getAllTweets");
+    },
+  },
+};
+</script>
