@@ -26,7 +26,7 @@ export default new Vuex.Store({
   actions: {
     getAllTweets(context) {
       return axios
-          .get("http://localhost:5141/api/tweet/")
+          .get("http://localhost:5141/api/tweet")
           .then((response) => {
               context.commit("setTweets", response.data);
               console.log(response.data)

@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="left">
+    <v-row>
       <v-card width="400">
         <v-img
           height="200px"
