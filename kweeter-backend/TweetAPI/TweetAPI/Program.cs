@@ -1,7 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using TweetAPI.Data;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:8080");
+        });
+});
 
 // Add services to the container.
 
@@ -10,6 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TweetServiceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TweetDatabase")));
+
 
 var app = builder.Build();
 
@@ -27,6 +39,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

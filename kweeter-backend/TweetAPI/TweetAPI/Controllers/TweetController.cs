@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TweetAPI.Data;
 using TweetAPI.Model;
@@ -9,6 +10,7 @@ namespace TweetAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("tweetPolicy")]
     public class TweetController : ControllerBase
     {
         private readonly TweetServiceContext _context;
@@ -19,6 +21,7 @@ namespace TweetAPI.Controllers
         }
 
         // GET: api/<TweetController>
+        [EnableCors("tweetPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tweet>>> Get()
         {
