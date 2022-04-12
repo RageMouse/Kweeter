@@ -10,7 +10,7 @@ namespace TweetAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("tweetPolicy")]
+    [EnableCors("MyAllowSpecificOrigins")]
     public class TweetController : ControllerBase
     {
         private readonly TweetServiceContext _context;
@@ -21,7 +21,6 @@ namespace TweetAPI.Controllers
         }
 
         // GET: api/<TweetController>
-        [EnableCors("tweetPolicy")]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Tweet>>> Get()
         {
