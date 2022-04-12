@@ -4,6 +4,8 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+const baseUrl = 'http://localhost:5141/api/tweet';
+
 export default new Vuex.Store({
   state: {
     tweets: {},
@@ -26,7 +28,7 @@ export default new Vuex.Store({
   actions: {
     getAllTweets(context) {
       return axios
-          .get("http://localhost:5141/api/tweet")
+          .get(baseUrl)
           .then((response) => {
               context.commit("setTweets", response.data);
               console.log(response.data)

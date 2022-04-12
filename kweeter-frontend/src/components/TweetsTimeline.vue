@@ -4,21 +4,25 @@
       <v-row dense>
         <v-col
           v-for="tweet in tweets"
-          :key="tweet.tweetId"
+          :key="tweet.id"
           cols="12"
-          md="3"
+          md="6"
           sm="4"
           xs="12"
         >
           <v-card class="mx-auto" color="#26c6da" dark max-width="600">
             <v-card-title>
               <v-icon large left> mdi-twitter </v-icon>
-              <span class="text-h6 font-weight-light" v-text="tweet.tweetName"></span>
+              <span
+                class="text-h6 font-weight-light"
+                v-text="tweet.title"
+              ></span>
             </v-card-title>
 
-            <v-card-text class="text-h5 font-weight-bold">
-              "Turns out semicolon-less style is easier and safer in TS because
-              most gotcha edge cases are type invalid as well."
+            <v-card-text
+              class="text-h5 font-weight-bold"
+              v-text="tweet.message"
+            >
             </v-card-text>
 
             <v-card-actions>
