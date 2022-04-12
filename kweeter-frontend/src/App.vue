@@ -14,6 +14,8 @@
       <v-tabs >
         <v-tab to="/">Home</v-tab>
         <v-tab to="/about">About</v-tab>
+        <v-spacer></v-spacer>
+        <v-tab to="/login">Login</v-tab>
       </v-tabs>
       <div class="ml-3">
         <v-switch v-model="$vuetify.theme.dark" hide-details label="Theme Dark"></v-switch>

@@ -6,7 +6,7 @@
         public string Title { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public string Message { get; set; }
-        public bool IsDeleted { get; set; }
-        public int UserId { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        public int UserId { get; set; } = 1;
     }
 }
