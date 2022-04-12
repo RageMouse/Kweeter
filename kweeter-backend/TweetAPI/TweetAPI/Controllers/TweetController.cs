@@ -10,7 +10,7 @@ namespace TweetAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("MyAllowSpecificOrigins")]
+    [EnableCors("MyPolicy")]
     public class TweetController : ControllerBase
     {
         private readonly TweetServiceContext _context;

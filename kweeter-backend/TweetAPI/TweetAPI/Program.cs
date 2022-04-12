@@ -1,16 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using TweetAPI.Data;
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
+    options.AddPolicy(name: "MyPolicy",
         policy =>
         {
-            policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+            policy.AllowAnyHeader().AllowAnyMethod();
+            policy.WithOrigins("http://localhost:8080");
         });
 });
 
@@ -42,7 +41,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseCors("MyPolicy");
 
 app.UseAuthorization();
 

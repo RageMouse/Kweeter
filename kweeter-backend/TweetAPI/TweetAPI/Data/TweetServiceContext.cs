@@ -15,11 +15,7 @@ namespace TweetAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-/*            modelBuilder.Entity<Tweet>().HasData(
-              new Tweet(1, "Test", "Just work for once"),
-              new Tweet(2, "Pls", "I need to feed my family"),
-              new Tweet(3, "Bro", "This is going on for too long")
-            );*/
+            modelBuilder.Entity<Tweet>().HasQueryFilter(f => !f.IsDeleted);
         }
     }
 }
