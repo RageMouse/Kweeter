@@ -1,5 +1,7 @@
 # kweeter-frontend
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Kweeter_VueJS)](https://sonarcloud.io/summary/new_code?id=Kweeter_VueJS)
+
 ## Project setup
 ```
 npm install
