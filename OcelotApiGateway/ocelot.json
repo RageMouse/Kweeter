@@ -1,0 +1,19 @@
+﻿{
+  "Routes": [
+    //Tweet API
+    {
+      "DownstreamPathTemplate": "/api/tweet",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tweet_api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/tweet",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "GlobalConfiguration": {
+  }
+}
