@@ -23,9 +23,9 @@ jobs:
           
   zap_scan:
     runs-on: ubuntu-latest
-    name: Scan ZAP website
+    name: Scan Kweeter Website OWASP
     steps:
       - name: ZAP Scan
-        uses: zaproxy/action-baseline@v0.3.0
+        uses: zaproxy/action-baseline@v0.6.1
         with:
           target: 'https://kweeter.vercel.app/'
