@@ -23,5 +23,13 @@ services:
       - tweet_db
     container_name: tweet_api
 
+  ocelotapigateway:
+    build:
+      context: ./OcelotApiGateway
+      dockerfile: Dockerfile
+    ports:
+    - "5142:80"
+    container_name: ocelot_gateway
+
 volumes:
   tweet_volume:
