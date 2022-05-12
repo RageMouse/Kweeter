@@ -27,7 +27,10 @@ spec:
         - name: ACCEPT_EULA
           value: "Y"
         - name: SA_PASSWORD
-          value: Superl33tpassw0rd!
+          valueFrom:
+            secretKeyRef:
+              name: mssql
+              key: SA_PASSWORD 
         volumeMounts:
         - name: mssqldb
           mountPath: /var/opt/mssql
@@ -49,10 +52,18 @@ spec:
       targetPort: 1433
   type: LoadBalancer
 ---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+     name: azure-disk
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageaccounttype: Standard_LRS
+  kind: Managed
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  creationTimestamp: null
   name: tweet-db
 spec:
   accessModes:
@@ -60,4 +71,3 @@ spec:
   resources:
     requests:
       storage: 100Mi
-status: {}

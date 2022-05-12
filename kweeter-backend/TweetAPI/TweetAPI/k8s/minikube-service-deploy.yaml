@@ -4,10 +4,13 @@ metadata:
   name: tweetapi-service
 spec:
   selector:
-    component: web
+    app: tweetapi
+    tier: backend
   ports:
-    - port: 5141
+    - protocol: TCP
+      port: 5141
       targetPort: 5141
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -26,6 +29,6 @@ spec:
       containers:
         - name: tweet-api
           image: tweet-api
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 5141
+          - containerPort: 5141
