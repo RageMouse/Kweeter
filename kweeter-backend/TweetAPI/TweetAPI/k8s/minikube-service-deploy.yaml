@@ -8,7 +8,7 @@ spec:
     tier: backend
   ports:
     - protocol: TCP
-      port: 5141
+      port: 80
       targetPort: 5141
   type: LoadBalancer
 ---
