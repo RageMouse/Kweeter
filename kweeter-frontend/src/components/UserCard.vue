@@ -2,23 +2,17 @@
   <v-card class="elevation-12 mx-auto" max-width="1500">
     <v-container fluid>
       <v-row dense>
-        <v-col
-          cols="12"
-          md="6"
-          sm="4"
-          xs="12"
-        >
+        <v-col cols="12" md="6" sm="4" xs="12">
           <v-card class="mx-auto" color="#26c6da" dark max-width="600">
             <v-card-title>
               <v-icon large left> mdi-twitter </v-icon>
-              <span
-                class="text-h6 font-weight-light"
-              >User</span>
+              <span class="text-h6 font-weight-light">User</span>
             </v-card-title>
 
             <v-card-text
               class="text-h5 font-weight-bold"
-            >maybedennis
+              v-model="profile.username"
+              >maybedennis
             </v-card-text>
 
             <v-card-actions>
@@ -36,7 +30,9 @@
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <v-btn color="secondary" dark @click="followUser" > Follow </v-btn>
+                  <v-btn color="secondary" dark @click="followUser">
+                    Follow
+                  </v-btn>
                 </v-row>
               </v-list-item>
             </v-card-actions>
@@ -51,12 +47,15 @@
 export default {
   name: "followUser",
   data: () => ({
-    username: ""
+    profile: {
+      username: "maybedennis",
+    },
   }),
   methods: {
     followUser() {
-      return this.$store.dispatch("followUser", this.username);
-    }
+      console.log(this.username);
+      return this.$store.dispatch("followUser", this.profile);
+    },
   },
 };
 </script>
