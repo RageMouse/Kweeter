@@ -25,10 +25,26 @@
                 src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
               />
             </v-avatar>
-            <p class="ml-3">John Doe</p>
+            <p class="ml-3" v-text="profile.nickname">John Doe</p>
           </v-card-title>
         </v-img>
       </v-card>
     </v-row>
   </v-container>
 </template>
+
+
+<script>
+export default {
+  name: "ProfileCard",
+  computed: {
+    profile() {
+      return this.$store.getters.profile;
+    },
+  },
+  mounted() {
+  },
+  methods: {
+  },
+};
+</script>
