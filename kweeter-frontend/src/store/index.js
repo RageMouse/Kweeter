@@ -34,7 +34,8 @@ export default new Vuex.Store({
     followUser: {
       mainuser: '',
       userfollowed: ''
-    }
+    },
+    usersYouFollow: {}
   },
   getters: {
     tweets(state) {
@@ -42,6 +43,9 @@ export default new Vuex.Store({
     },
     profile(state){
       return state.profile
+    },
+    usersYouFollow(state) {
+      return state.usersYouFollow
     }
   },
   mutations: {
@@ -58,6 +62,9 @@ export default new Vuex.Store({
       state.profile.name = authResult.name;
       state.profile.email = authResult.email;
       state.profile.nickname = authResult.nickname;
+    },
+    setUsersYouFollow(state, usersYouFollow){
+      state.usersYouFollow = usersYouFollow
     }
   },
   actions: {
@@ -127,6 +134,17 @@ export default new Vuex.Store({
           throw error
         })
     },
+    getUsersYouFollow(context) {
+      return axios
+        .get(baseUrlFollower)
+        .then((response) => {
+          context.commit("setUsersYouFollow", response.data);
+          console.log(response.data)
+        })
+        .catch(error => {
+          throw new Error(error)
+        });
+    }
   },
   modules: {
   }
