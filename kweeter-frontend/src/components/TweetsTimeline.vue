@@ -36,7 +36,7 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>Evan You</v-list-item-title>
+                  <v-list-item-title v-text="profile.nickname">Evan You</v-list-item-title>
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
@@ -61,6 +61,9 @@ export default {
   computed: {
     tweets() {
       return this.$store.getters.tweets;
+    },
+    profile() {
+      return this.$store.getters.profile;
     },
   },
   mounted() {
