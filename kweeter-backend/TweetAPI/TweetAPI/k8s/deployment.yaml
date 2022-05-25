@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tweetapi-deployment
+  labels:
+    app: tweetapi-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tweetapi-deployment
+  template:
+    metadata:
+      labels:
+        app: tweetapi-deployment
+    spec:
+      containers:
+      - name: tweetapi-deployment
+        image: registry.digitalocean.com/kweeter/tweetapi
+        ports:
+        - containerPort: 5141
