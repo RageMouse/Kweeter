@@ -1,5 +1,5 @@
+using FollowerAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using TweetAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,16 +19,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<TweetServiceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TweetDatabase")));
-
+builder.Services.AddDbContext<DbServiceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("FollowerDatabase")));
 
 var app = builder.Build();
-
-/*using (var scope = app.Services.CreateScope())
-{
-    var dataContext = scope.ServiceProvider.GetRequiredService<TweetServiceContext>();
-    dataContext.Database.Migrate();
-}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

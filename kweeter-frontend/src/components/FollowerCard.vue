@@ -3,23 +3,27 @@
     <v-row>
       <v-card width="400">
         <v-img
-          height="200px"
-          src="https://cdn.pixabay.com/photo/2020/07/12/07/47/bee-5396362_1280.jpg"
+          height="400px"
+          src="https://cdn.pixabay.com/photo/2015/12/01/15/43/black-1072366_960_720.jpg"
         >
           <v-app-bar flat color="rgba(0, 0, 0, 0)">
             <v-toolbar-title class="text-h6 white--text pl-0">
-              Profile
+              People you follow
             </v-toolbar-title>
           </v-app-bar>
 
-          <v-card-title class="white--text mt-8">
+          <v-card-title
+            class="white--text mt-8"
+            v-for="user in usersYouFollow"
+            :key="user.userFollowed"
+          >
             <v-avatar size="56">
               <img
                 alt="user"
                 src="https://cdn.pixabay.com/photo/2020/06/24/19/12/cabbage-5337431_1280.jpg"
               />
             </v-avatar>
-            <p class="ml-3" v-text="profile.nickname">John Doe</p>
+            <p class="ml-3" v-text="user.userFollowed">John Doe</p>
           </v-card-title>
         </v-img>
       </v-card>
@@ -30,13 +34,19 @@
 
 <script>
 export default {
-  name: "ProfileCard",
+  name: "FollowerCard",
   computed: {
-    profile() {
-      return this.$store.getters.profile;
+    usersYouFollow() {
+      return this.$store.getters.usersYouFollow;
     },
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.getAllUsersYouFollow();
+  },
+  methods: {
+    getAllUsersYouFollow() {
+      return this.$store.dispatch("getUsersYouFollow");
+    },
+  },
 };
 </script>

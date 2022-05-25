@@ -6,7 +6,8 @@ import router from '@/router'
 
 Vue.use(Vuex)
 
-const baseUrl = 'http://localhost:5141/api/tweet/';
+const baseUrlTweet = 'http://localhost:5141/api/tweet/';
+const baseUrlFollower = 'http://localhost:5143/api/follower/';
 
 export default new Vuex.Store({
   state: {
@@ -23,12 +24,29 @@ export default new Vuex.Store({
       redirectUri: process.env.VUE_APP_DOMAINURL + '/auth0callback',
       responseType: process.env.VUE_APP_AUTH0_CONFIG_RESPONSETYPE,
       scope: process.env.VUE_APP_AUTH0_CONFIG_SCOPE
-    })
+    }),
+    profile: {
+      userId: '',
+      name: '',
+      email: '',
+      nickname: ''
+    },
+    followUser: {
+      mainuser: '',
+      userfollowed: ''
+    },
+    usersYouFollow: {}
   },
   getters: {
     tweets(state) {
       return state.tweets
     },
+    profile(state){
+      return state.profile
+    },
+    usersYouFollow(state) {
+      return state.usersYouFollow
+    }
   },
   mutations: {
     setTweets(state, tweets) {
@@ -39,12 +57,20 @@ export default new Vuex.Store({
     },
     setUserIsAuthenticated(state, replacement) {
       state.userIsAuthorized = replacement;
+    },
+    setProfile(state, authResult) {
+      state.profile.name = authResult.name;
+      state.profile.email = authResult.email;
+      state.profile.nickname = authResult.nickname;
+    },
+    setUsersYouFollow(state, usersYouFollow){
+      state.usersYouFollow = usersYouFollow
     }
   },
   actions: {
     getAllTweets(context) {
       return axios
-        .get(baseUrl)
+        .get(baseUrlTweet)
         .then((response) => {
           context.commit("setTweets", response.data);
           console.log(response.data)
@@ -55,7 +81,7 @@ export default new Vuex.Store({
     },
     createTweet(context, data) {
       return axios
-        .post(baseUrl, {
+        .post(baseUrlTweet, {
           title: data.tweetTitle,
           message: data.tweetMessage
         })
@@ -78,8 +104,10 @@ export default new Vuex.Store({
           localStorage.setItem('access_token', authResult.accessToken);
           localStorage.setItem('id_token', authResult.idToken);
           localStorage.setItem('expires_at', expiresAt);
+          
+          context.commit("setProfile", authResult.idTokenPayload);
 
-          router.replace('/members');
+          router.replace('/users');
         }
         else if (err) {
           alert('login failed. Error #KJN838');
@@ -94,6 +122,28 @@ export default new Vuex.Store({
       localStorage.removeItem('expires_at');
 
       window.location.href = process.env.VUE_APP_AUTH0_DOMAINURL + "/v2/logout?returnTo=" + process.env.VUE_APP_DOMAINURL + "/login&client_id=" + process.env.VUE_APP_AUTH0_CLIENT_ID;
+    },
+    followUser(context, data) {
+      console.log(data.username)
+      return axios
+        .post(baseUrlFollower, {
+          mainuser: context.state.profile.nickname,
+          userfollowed: data.username
+        })
+        .catch((error) => {
+          throw error
+        })
+    },
+    getUsersYouFollow(context) {
+      return axios
+        .get(baseUrlFollower)
+        .then((response) => {
+          context.commit("setUsersYouFollow", response.data);
+          console.log(response.data)
+        })
+        .catch(error => {
+          throw new Error(error)
+        });
     }
   },
   modules: {

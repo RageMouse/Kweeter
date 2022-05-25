@@ -15,7 +15,7 @@ services:
 
   tweetapi:
     build:
-      context: ./kweeter-backend/TweetAPI/
+      context: ./kweeter-backend/TweetAPI
       dockerfile: ./TweetAPI/Dockerfile
     ports:
     - "5141:80"
@@ -23,13 +23,36 @@ services:
       - tweet_db
     container_name: tweet_api
 
-  ocelotapigateway:
+  follower-db:
+    image: "mcr.microsoft.com/mssql/server"
+    volumes:
+      - follower-volume:/var/opt/mssql
+    container_name: follower-db
+
+    environment:
+      SA_PASSWORD: "Superl33tpassw0rd!"
+      ACCEPT_EULA: "Y"
+    ports:
+     - "1434:1434"
+
+  followerapi:
     build:
-      context: ./OcelotApiGateway
+      context: ./kweeter-backend/FollowerAPI/
       dockerfile: Dockerfile
     ports:
-    - "5142:80"
-    container_name: ocelot_gateway
+    - "5143:80"
+    depends_on:
+      - follower-db
+    container_name: follower-api
+
+  # ocelotapigateway:
+  #   build:
+  #     context: ./OcelotApiGateway
+  #     dockerfile: Dockerfile
+  #   ports:
+  #   - "5142:80"
+  #   container_name: ocelot_gateway
 
 volumes:
   tweet_volume:
+  follower-volume:

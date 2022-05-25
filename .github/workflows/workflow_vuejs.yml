@@ -20,3 +20,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan Kweeter Website OWASP
+    steps:
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.6.1
+        with:
+          target: 'https://kweeter.vercel.app/'
