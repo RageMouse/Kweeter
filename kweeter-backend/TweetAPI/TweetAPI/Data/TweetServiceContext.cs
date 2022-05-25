@@ -8,7 +8,7 @@ namespace TweetAPI.Data
         public TweetServiceContext(DbContextOptions<TweetServiceContext> options) : base(options)
         {
             // Creates the database !! Just for DEMO !! in production code you have to handle it differently!  
-            this.Database.EnsureCreated();
+            /*this.Database.EnsureCreated();*/
         }
 
         public DbSet<Tweet> Tweet { get; set; }

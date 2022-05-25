@@ -24,11 +24,11 @@ builder.Services.AddDbContext<TweetServiceContext>(options => options.UseSqlServ
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+/*using (var scope = app.Services.CreateScope())
 {
     var dataContext = scope.ServiceProvider.GetRequiredService<TweetServiceContext>();
     dataContext.Database.Migrate();
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

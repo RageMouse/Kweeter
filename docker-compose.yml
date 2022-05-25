@@ -45,13 +45,13 @@ services:
       - follower-db
     container_name: follower-api
 
-  ocelotapigateway:
-    build:
-      context: ./OcelotApiGateway
-      dockerfile: Dockerfile
-    ports:
-    - "5142:80"
-    container_name: ocelot_gateway
+  # ocelotapigateway:
+  #   build:
+  #     context: ./OcelotApiGateway
+  #     dockerfile: Dockerfile
+  #   ports:
+  #   - "5142:80"
+  #   container_name: ocelot_gateway
 
 volumes:
   tweet_volume:
