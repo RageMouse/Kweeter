@@ -29,3 +29,17 @@ jobs:
         uses: zaproxy/action-baseline@v0.6.1
         with:
           target: 'https://kweeter.vercel.app/'
+          
+  locust_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Run Load Test
+        uses: apardo04/locust-github-action@master
+        with:
+          LOCUSTFILE: "locustfile.py"
+          URL:  "https://kweeter.vercel.app"
+          USERS: "1"
+          RATE: "1"
+          RUNTIME: "10s"
