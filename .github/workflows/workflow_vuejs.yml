@@ -38,7 +38,6 @@ jobs:
       - name: Run Load Test
         uses: apardo04/locust-github-action@master
         with:
-          LOCUSTFILE: "locustfile.py"
           URL:  "https://kweeter.vercel.app"
           USERS: "1"
           RATE: "1"
