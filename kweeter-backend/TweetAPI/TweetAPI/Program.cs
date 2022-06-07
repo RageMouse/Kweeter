@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ;
 using TweetAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,15 +21,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TweetServiceContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TweetDatabase")));
-
+builder.Services.AddHostedService<Consumer>();
 
 var app = builder.Build();
-
-/*using (var scope = app.Services.CreateScope())
-{
-    var dataContext = scope.ServiceProvider.GetRequiredService<TweetServiceContext>();
-    dataContext.Database.Migrate();
-}*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

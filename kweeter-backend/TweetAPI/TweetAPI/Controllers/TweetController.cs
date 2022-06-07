@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ;
 using TweetAPI.Data;
 using TweetAPI.Model;
+using TweetAPI.RabbitMQ;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,10 +16,12 @@ namespace TweetAPI.Controllers
     public class TweetController : ControllerBase
     {
         private readonly TweetServiceContext _context;
+        private readonly Consumer _consumer;
 
         public TweetController(TweetServiceContext context)
         {
             _context = context;
+            _consumer = new Consumer();
         }
 
         // GET: api/<TweetController>
@@ -32,6 +36,7 @@ namespace TweetAPI.Controllers
         public async Task<ActionResult<Tweet>> Get(int id)
         {
             var tweet = await _context.Tweet.FindAsync(id);
+
             if (tweet == null)
             {
                 return NotFound();
@@ -46,6 +51,8 @@ namespace TweetAPI.Controllers
         {
             _context.Tweet.Add(tweet);
             await _context.SaveChangesAsync();
+
+            Producer.Main(tweet.Message);
 
             return CreatedAtAction(nameof(Get), new { id = tweet.Id }, tweet);
         }

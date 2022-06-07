@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: tweetapi-deployment
-        image: registry.digitalocean.com/kweeter/tweetapi
+        image: us-central1-docker.pkg.dev/apt-aloe-351320/kwetter-docker-repo/tweetapi-image:tag2
         ports:
         - containerPort: 5141
