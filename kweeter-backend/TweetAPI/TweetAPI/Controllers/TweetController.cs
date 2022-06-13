@@ -52,7 +52,7 @@ namespace TweetAPI.Controllers
             _context.Tweet.Add(tweet);
             await _context.SaveChangesAsync();
 
-            Producer.Main(tweet.Message);
+            Producer.Send(tweet.Message);
 
             return CreatedAtAction(nameof(Get), new { id = tweet.Id }, tweet);
         }

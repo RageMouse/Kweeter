@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using RabbitMQ;
 using TweetAPI.Data;
+using TweetAPI.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 

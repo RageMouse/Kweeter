@@ -7,12 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["TweetAPI.csproj", "TweetAPI/"]
+COPY ["TweetAPI/TweetAPI.csproj", "TweetAPI/"]
 RUN dotnet restore "TweetAPI/TweetAPI.csproj"
-
-WORKDIR "/src/TweetAPI"
 COPY . .
-
+WORKDIR "/src/TweetAPI"
 RUN dotnet build "TweetAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
