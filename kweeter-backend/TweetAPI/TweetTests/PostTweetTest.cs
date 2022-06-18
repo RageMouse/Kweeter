@@ -6,7 +6,7 @@ using TweetAPI.Data;
 
 namespace TweetTests
 {
-    public class Tests
+    public class PostTweetTest
     {
         public TweetServiceContext _context { get; private set; }
         public TweetController controller { get; private set; }

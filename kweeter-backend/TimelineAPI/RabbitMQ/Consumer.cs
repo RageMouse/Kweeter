@@ -1,0 +1,78 @@
+﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using System.Text;
+using TimelineAPI.Data;
+
+namespace TimelineAPI.RabbitMQ
+{
+    public class Consumer : BackgroundService
+    {
+        private IConnection _connection;
+        private IModel _channel;
+        private readonly IServiceScopeFactory _scopeFactory;
+
+        public Consumer(IServiceScopeFactory serviceScopeFactory)
+        {
+            _scopeFactory = serviceScopeFactory;
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            // when the service is stopping
+            // dispose these references
+            // to prevent leaks
+            if (stoppingToken.IsCancellationRequested)
+            {
+                _channel.Dispose();
+                _connection.Dispose();
+                return Task.CompletedTask;
+            }
+            string _url = "amqps://gxqclfxu:tRmJiShnFDlE8lIl6lj0S9jpYw23HZlZ@rattlesnake.rmq.cloudamqp.com/gxqclfxu";
+            // create a connection and open a channel, dispose them when done
+            var factory = new ConnectionFactory
+            {
+                Uri = new Uri(_url)
+            };
+
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+
+            // ensure that the queue exists before we access it
+            var queueName = "tweetQueue";
+            bool durable = false;
+            bool exclusive = false;
+            bool autoDelete = true;
+
+            _channel.QueueDeclare(queueName, durable, exclusive, autoDelete, null);
+
+            var consumer = new EventingBasicConsumer(_channel);
+
+            // add the message receive event
+            consumer.Received += (model, deliveryEventArgs) =>
+            {
+                var body = deliveryEventArgs.Body.ToArray();
+                // convert the message back from byte[] to a string
+                var message = Encoding.UTF8.GetString(body);
+                Console.WriteLine("** Received message: {0} by Consumer thread **", message);
+                SaveTokens(message);
+                // ack the message, ie. confirm that we have processed it
+                // otherwise it will be requeued a bit later
+                _channel.BasicAck(deliveryEventArgs.DeliveryTag, false);
+            };
+
+            // start consuming
+            _ = _channel.BasicConsume(consumer, queueName);
+            return Task.CompletedTask;
+        }
+
+        private void SaveTokens(string tweetMessage)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var _context = scope.ServiceProvider.GetService<TimelineServiceContext>();
+                _context.TimelineTweet.Add(new Model.TimelineTweet(tweetMessage));
+                _context.SaveChanges();
+            }
+        }
+    }
+}
